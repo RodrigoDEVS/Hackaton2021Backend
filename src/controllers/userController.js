@@ -2,6 +2,7 @@
 const jwt = require('jsonwebtoken');
 //Importar módulos
 const User = require('../models/user');
+const { PRIVATE_KEY } = require('./tokenController');
 
 class UserController{
     
@@ -13,7 +14,7 @@ class UserController{
                     res.status(500).json({info: err});
                 }else{
                     //Generar/crear token
-                    let token = jwt.sign({id: data._id, email: data.email}, 'HackatonUPB2021');
+                    let token = jwt.sign({id: data._id, email: data.email}, PRIVATE_KEY);
                     res.status(201).json({token});
                 }
             });
@@ -31,10 +32,10 @@ class UserController{
             }else{
                 if(data != null && data != undefined){
                 //Generar/crear token
-                let token = jwt.sign({id: data._id, email: data.email}, 'HackatonUPB2021');
+                let token = jwt.sign({id: data._id, email: data.email}, PRIVATE_KEY);
                 res.status(200).json({token});
             }else{
-                res.status(401).json({info: 'Credenciales inválidas'})
+                res.status(401).json({info: 'Credenciales inválidas'});
             }
         }
         })
