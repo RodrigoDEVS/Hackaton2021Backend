@@ -12,6 +12,7 @@ class UserRouter{
         const userC = new UserController();
         //Configurar rutas
         this.router.post('/user', userC.register);
+        this.router.post('/user/auth', userC.login)
     }
 }
 

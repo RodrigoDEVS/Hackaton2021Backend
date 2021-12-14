@@ -21,6 +21,24 @@ class UserController{
             res.status(400).json({info: 'Datos incompletos'});
         }
     }
+
+    login(req, res){
+        //capturar datos del cuerpo de la peticion
+        let {email, password} = req.body;
+        User.findOne({email, password}, (error, data)=>{
+            if(error){
+                res.status(500).json({error});
+            }else{
+                if(data != null && data != undefined){
+                //Generar/crear token
+                let token = jwt.sign({id: data._id, email: data.email}, 'HackatonUPB2021');
+                res.status(200).json({token});
+            }else{
+                res.status(401).json({info: 'Credenciales inválidas'})
+            }
+        }
+        })
+    }
 }
 
 module.exports = UserController;
