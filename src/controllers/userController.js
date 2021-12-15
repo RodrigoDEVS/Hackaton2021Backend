@@ -2,10 +2,19 @@
 const jwt = require('jsonwebtoken');
 //Importar módulos
 const User = require('../models/user');
-const { PRIVATE_KEY } = require('./tokenController');
+const { PRIVATE_KEY, TokenController } = require('./tokenController');
 
 class UserController{
+
+    constructor(){
+        this.objTokenC = new TokenController();
+    }
     
+    //Esto es un método
+    mi_metodo(){
+        console.log("Hola Mundo")
+    }
+
     register(req, res){
         let objUser = req.body;
         if(objUser.name && objUser.document && objUser.email && objUser.password){
@@ -39,6 +48,18 @@ class UserController{
             }
         }
         })
+    }
+
+    //Propiedad inicializadora
+    get = (req, res)=>{
+        let decode = jwt.decode(this.objTokenC.getToken(req), PRIVATE_KEY);
+        User.find({user_id: decode.id}, (error, data)=>{
+            if(error){
+                res.status(500).json({info: error});
+            }else{
+                res.status(200).json(data);
+            }
+        });
     }
 }
 
