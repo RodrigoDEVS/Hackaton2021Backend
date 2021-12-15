@@ -61,6 +61,14 @@ class UserController{
             }
         });
     }
+
+    update = (req, res)=>{
+
+    }
+
+    delete = (req, res)=>{
+        
+    }
 }
 
 module.exports = UserController;

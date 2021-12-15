@@ -1,6 +1,7 @@
 //Importar dependencias
 const express = require('express');
 const morgan = require('morgan');
+const cors = require('cors');
 //Importar modulos/clases
 const IndexRouter = require('./routers/indexRouter');
 const ConnDb = require('./database/connDb');
@@ -18,6 +19,8 @@ class Server{
         this.app.use(express.json());
         //usar morgan en express para el monitoreo de las peticiones http
         this.app.use(morgan());
+        //usar cors para gestionar conexiones de origen cruzado
+        this.app.use(cors());
         //Almacenar el puerto por el que correrá el servidor
         this.app.set('PORT', process.env.PORT || 3000);
         let puerto = this.app.get('PORT');
