@@ -11,11 +11,6 @@ class UserController{
         this.objTokenC = new TokenController();
     }
     
-    //Esto es un método
-    mi_metodo(){
-        console.log("Hola Mundo")
-    }
-
     register(req, res){
         let objUser = req.body;
         if(objUser.name && objUser.document && objUser.email && objUser.password){
