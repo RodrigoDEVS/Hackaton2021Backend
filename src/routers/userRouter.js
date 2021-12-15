@@ -19,6 +19,8 @@ class UserRouter{
         this.router.post('/user', userC.register);
         this.router.post('/user/auth', userC.login);
         this.router.get('/user', userC.get);
+        this.router.put('/user', userC.update);
+        this.router.delete('/user', userC.delete);
     }
 }
 

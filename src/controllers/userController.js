@@ -1,5 +1,6 @@
 //Importar dependencias
 const jwt = require('jsonwebtoken');
+const user = require('../models/user');
 //Importar módulos
 const User = require('../models/user');
 const { PRIVATE_KEY, TokenController } = require('./tokenController');
@@ -62,13 +63,38 @@ class UserController{
         });
     }
 
-    update = (req, res)=>{
-
+    update = (req, res) => {
+        //decodificar token
+        let decode = jwt.decode(this.objTokenC.getToken(req), PRIVATE_KEY);
+        let { id, name, document, email, password } = req.body;
+        User.findOneAndUpdate(
+            { user_id: decode.id },
+            { name: name, document: document, email: email, password: password },
+            (err, doc) => {
+                if (err) {
+                    res.status(500).json({ info: err });
+                } else {
+                    res.status(200).json({ info: "Usuario Actualizado" });
+                }
+            }
+        );
     }
 
-    delete = (req, res)=>{
-        
-    }
+    delete = (req, res) => {
+        //decodificar token
+        let decode = jwt.decode(this.objTokenC.getToken(req), PRIVATE_KEY);
+        let { id } = req.body;
+        User.findOneAndRemove(
+            { user_id: decode.id },
+            (err, doc) => {
+                if (err) {
+                    res.status(500).json({ info: err });
+                } else {
+                    res.status(200).json({ info: "Usuario eliminado" });
+                }
+            }
+        );
+    };
 }
 
 module.exports = UserController;
